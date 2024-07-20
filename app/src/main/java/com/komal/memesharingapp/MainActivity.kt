@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     var currentimageurl:String? = null
+    var imgUrl:String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +60,8 @@ class MainActivity : AppCompatActivity() {
         val JsonObjectRequest = JsonObjectRequest(
             Request.Method.GET, currentimageurl, null,
            Response.Listener { response ->
-                             val imgUrl = response.getString("message")
+                              imgUrl = response.getString("message")
+
                Glide.with(this).load(imgUrl).listener(object:RequestListener <Drawable>
                {
                    override fun onLoadFailed(
@@ -99,7 +101,7 @@ class MainActivity : AppCompatActivity() {
     fun shareMeme(){
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plain"
-        intent.putExtra(Intent.EXTRA_TEXT,"hey , checkout this cute dog wallpaper ! $currentimageurl")
+        intent.putExtra(Intent.EXTRA_TEXT,"hey , checkout this cute dog wallpaper ! $imgUrl")
         val chooser = Intent.createChooser(intent,"share this meme using ..")
         startActivity(chooser)
     }
